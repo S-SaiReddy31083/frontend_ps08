@@ -5,15 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login </title>
     <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-    <div class="container">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1>🔐 Login</h1>
-            <a href="../index.html" class="btn btn-back"> Back to Home</a>
-        </div>
+    <style>
+        body.login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
 
+        .login-page .container {
+            width: 100%;
+            max-width: 540px;
+            padding: 0;
+        }
+
+        .login-page .card {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body class="login-page">
+    <div class="container">
         <!-- Alert Messages -->
         <div id="alertMessage" class="alert"></div>
 
@@ -45,9 +58,14 @@
                     >
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    Login
-                </button>
+                <div style="display: flex; gap: 12px;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        Login
+                    </button>
+                    <a href="../index.html" class="btn btn-back" style="width: 100%;">
+                        Back
+                    </a>
+                </div>
             </form>
 
             <p style="text-align: center; margin-top: 20px; color: #6c757d;">
