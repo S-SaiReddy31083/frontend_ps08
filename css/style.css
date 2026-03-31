@@ -99,7 +99,7 @@ body {
 }
 
 .navbar-menu a {
-    color: var(--white);
+    color: #000000;
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
@@ -119,20 +119,22 @@ body {
 }
 
 .nav-btn-outline {
-    background-color: rgba(30, 29, 29, 0.15);
-    border: 2px solid rgba(14, 13, 13, 0.3);
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #000000;
 }
 
 .nav-btn-outline:hover {
-    background-color: rgba(32, 30, 30, 0.25);
-    border-color: var(--white);
+    background-color: #f0f0f0;
+    border-color: #000000;
+    color: #000000;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .nav-btn-solid {
     background-color: var(--white);
-    color: #5c6767;
+    color: #b1d4d4;
     border: 2px solid var(--white);
 }
 
@@ -144,13 +146,15 @@ body {
 }
 
 .nav-btn-category {
-    background-color: rgba(30, 29, 29, 0.15);
-    border: 2px solid rgba(14, 13, 13, 0.3);
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #333232;
 }
 
 .nav-btn-category:hover {
-    background-color: rgba(32, 30, 30, 0.25);
-    border-color: var(--white);
+    background-color: #f0f0f0;
+    border-color: #000000;
+    color: #000000;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(215, 166, 166, 0.2);
 }
@@ -182,7 +186,7 @@ body {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, #788981 0%, #bca7a7 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #eceaea 100%);
     min-width: 140px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     border-radius: var(--border-radius);
@@ -206,7 +210,7 @@ body {
 .dropdown-menu a {
     display: block;
     padding: 12px 20px;
-    color: var(--white);
+    color: #000000;
     border-radius: 0;
     border: none !important;
     text-transform: none;
@@ -218,9 +222,8 @@ body {
 }
 
 .dropdown-menu a:hover {
-    background-color: rgba(74, 144, 226, 0.3);
-    color: var(--white);
-    transform: translateX(5px);
+    background-color: rgba(147, 150, 153, 0.3);
+    color: #000000;
     box-shadow: none;
 }
 
