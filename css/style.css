@@ -49,7 +49,7 @@ body {
    Navigation Bar Styles
    ======================================== */
 .navbar {
-    background: linear-gradient(135deg, #a1aedb 0%, #6ea5c7 100%);
+    background: linear-gradient(135deg, #798bcd 0%, #6da9cf 100%);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     position: sticky;
     top: 0;
@@ -859,27 +859,27 @@ table tbody tr:hover {
    ======================================== */
 .stats-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 9px;
+    margin-bottom: 10px;
 }
 
 .stat-card {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: var(--white);
-    padding: 20px;
+    padding: 14px 12px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     text-align: center;
 }
 
 .stat-card h3 {
-    font-size: 1.8rem;
-    margin-bottom: 8px;
+    font-size: 1.4rem;
+    margin-bottom: 4px;
 }
 
 .stat-card p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     opacity: 0.9;
 }
 
