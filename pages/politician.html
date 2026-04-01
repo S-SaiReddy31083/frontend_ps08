@@ -6,21 +6,33 @@
     <title>Politician Dashboard | FSAD-PS08</title>
     <link rel="stylesheet" href="../css/style.css">
     
+    <style>
+        .politician-header {
+            border-radius: 0;
+            margin-bottom: 0;
+        }
+
+        .logout-btn-custom:hover {
+            background-color: red !important;
+            color: white !important;
+            border-color: red !important;
+        }
+    </style>
+
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1>📊 Politician Dashboard - Analytics</h1>
-            <div>
-                <button onclick="logout()" class="btn btn-back" style="margin-right: 10px;">🚪 Logout</button>
-                <button id="refreshBtn" class="btn btn-primary" onclick="refreshAnalytics()">🔄 Refresh Data</button>
-                <a href="../index.html" class="btn btn-back">← Back to Home</a>
-            </div>
+    <!-- Page Header (acts as full-width nav bar) -->
+    <div class="page-header politician-header">
+        <h1>📊 Politician Dashboard - Analytics</h1>
+        <div>
+            <button id="refreshBtn" class="btn btn-primary" onclick="refreshAnalytics()" style="margin-right: 10px;">🔄 Refresh Data</button>
+            <button onclick="logout()" class="btn btn-back logout-btn-custom" style="color: black; background-color: white; border: 3px solid black;">Logout</button>
         </div>
+    </div>
 
+    <div class="container">
         <!-- Alert Messages -->
         <div id="alertMessage" class="alert"></div>
 

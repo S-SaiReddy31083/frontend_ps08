@@ -49,10 +49,10 @@
             margin: 0;
         }
 
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
+        .logout-btn-custom {
+            background-color: white;
+            border: 3px solid black;
+            color: black;
             padding: 10px 25px;
             border-radius: 6px;
             cursor: pointer;
@@ -61,8 +61,10 @@
             transition: all 0.3s;
         }
 
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
+        .logout-btn-custom:hover {
+            background-color: red;
+            color: white;
+            border-color: red;
             transform: translateY(-2px);
         }
 
@@ -437,7 +439,7 @@
                 <span class="admin-logo">🛠️</span>
                 <h1>Admin Dashboard</h1>
             </div>
-            <button class="logout-btn" onclick="logout()">Logout</button>
+            <button class="logout-btn-custom" onclick="logout()">Logout</button>
         </div>
     </nav>
 
