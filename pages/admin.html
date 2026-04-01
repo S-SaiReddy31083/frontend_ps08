@@ -736,11 +736,11 @@
             }
 
             try {
-                let tableRows = allUsers.map(user => {
+                let tableRows = allUsers.map((user, index) => {
                     const id = user.id || 'N/A';
                     return `
                         <tr>
-                            <td>${id}</td>
+                            <td>${index + 1}</td>
                             <td>${user.name || 'N/A'}</td>
                             <td>${user.email || 'N/A'}</td>
                             <td>${user.role || 'N/A'}</td>
@@ -801,12 +801,12 @@
             }
 
             try {
-                let tableRows = allIssues.map(issue => {
+                let tableRows = allIssues.map((issue, index) => {
                     const id = issue.id || 'N/A';
                     const isOpen = issue.status && issue.status.toUpperCase() === 'OPEN';
                     return `
                         <tr>
-                            <td>${id}</td>
+                            <td>${index + 1}</td>
                             <td>${issue.title || issue.description || 'N/A'}</td>
                             <td>${issue.category || 'N/A'}</td>
                             <td>${issue.votes || 0}</td>

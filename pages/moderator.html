@@ -716,12 +716,12 @@
             }
 
             try {
-                let tableRows = allIssues.map(issue => {
+                let tableRows = allIssues.map((issue, index) => {
                     const id = issue.id || 'N/A';
                     const status = issue.status || 'UNKNOWN';
                     return `
                         <tr>
-                            <td>${id}</td>
+                            <td>${index + 1}</td>
                             <td>${issue.title || issue.description || 'N/A'}</td>
                             <td>${issue.category || 'N/A'}</td>
                             <td>${issue.votes || 0}</td>
