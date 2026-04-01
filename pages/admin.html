@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Citizen Politician System</title>
+    <link rel="icon" type="image/png" href="../fa.png?v=2">
+    <link rel="shortcut icon" type="image/png" href="../fa.png?v=2">
     <link rel="stylesheet" href="../css/style.css">
     <style>
         /* Dashboard Specific Styles */
@@ -11,14 +13,15 @@
             background: #f5f7fa;
             margin: 0;
             padding: 0;
+            padding-bottom: 48px;
         }
 
         /* Navbar */
         .admin-navbar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f0f1f6 0%, #dddbde 100%);
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             padding: 0 30px;
-            color: white;
+            color: rgb(119, 147, 224);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -75,6 +78,70 @@
             padding: 30px 20px;
         }
 
+        .admin-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 24px;
+        }
+
+        .side-nav {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 16px 0;
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px - 48px);
+            overflow-y: auto;
+        }
+
+        .side-nav h4 {
+            margin: 0 20px 12px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #7f8c8d;
+        }
+
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .side-nav a:hover,
+        .side-nav a:focus {
+            background: #f8f9fa;
+            border-left-color: #667eea;
+        }
+
+        .side-nav a.active {
+            background: #eef2ff;
+            border-left-color: #4f46e5;
+            color: #1f2937;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .admin-main {
+            min-width: 0;
+        }
+
         .dashboard-header {
             margin-bottom: 30px;
         }
@@ -129,14 +196,14 @@
         /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
         }
 
         .stat-item {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px;
+            padding: 12px;
             border-radius: 10px;
             text-align: center;
             transition: all 0.3s;
@@ -164,13 +231,13 @@
         }
 
         .stat-number {
-            font-size: 36px;
+            font-size: 26px;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .stat-label {
-            font-size: 14px;
+            font-size: 12px;
             opacity: 0.9;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -332,16 +399,25 @@
         /* Footer */
         .dashboard-footer {
             text-align: center;
-            padding: 30px 20px;
+            padding: 14px 16px;
             background: white;
-            color: #7f8c8d;
+            color: #0e0e0e;
             margin-top: 40px;
             border-top: 1px solid #e0e0e0;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 900;
         }
 
         .dashboard-footer p {
             margin: 0;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         /* Responsive */
@@ -373,6 +449,15 @@
             .btn {
                 padding: 6px 12px;
                 font-size: 12px;
+            }
+
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .side-nav {
+                position: static;
+                height: auto;
             }
         }
 
@@ -436,7 +521,7 @@
     <nav class="admin-navbar">
         <div class="admin-navbar-content">
             <div class="admin-navbar-left">
-                <span class="admin-logo">🛠️</span>
+                <span class="admin-logo"></span>
                 <h1>Admin Dashboard</h1>
             </div>
             <button class="logout-btn-custom" onclick="logout()">Logout</button>
@@ -447,16 +532,18 @@
     <div id="alertMessage" class="alert-message"></div>
 
     <!-- Dashboard Content -->
-    <div class="dashboard-container">
-        
-        <!-- Dashboard Header -->
-        <div class="dashboard-header">
-            <h2>System Control Panel</h2>
-            <p>Manage users, issues, and monitor system statistics</p>
-        </div>
+    <div class="admin-layout">
+        <aside class="side-nav">
+            <h4>Admin Menu</h4>
+            <a href="#system-overview" data-section="system-overview">📊 System Overview</a>
+            <a href="#user-management" data-section="user-management">👥 User Management</a>
+            <a href="#issue-management" data-section="issue-management">📝 Issue Management</a>
+        </aside>
 
+        <main class="admin-main">
+        
         <!-- Card 1: System Overview -->
-        <div class="dashboard-card">
+        <div id="system-overview" class="dashboard-card admin-section">
             <div class="card-header">
                 <h3><span class="card-icon">📊</span> System Overview</h3>
             </div>
@@ -467,7 +554,7 @@
         </div>
 
         <!-- Card 2: User Management -->
-        <div class="dashboard-card">
+        <div id="user-management" class="dashboard-card admin-section">
             <div class="card-header">
                 <h3><span class="card-icon">👥</span> User Management</h3>
             </div>
@@ -478,7 +565,7 @@
         </div>
 
         <!-- Card 3: Issue Management -->
-        <div class="dashboard-card">
+        <div id="issue-management" class="dashboard-card admin-section">
             <div class="card-header">
                 <h3><span class="card-icon">📝</span> Issue Management</h3>
             </div>
@@ -488,6 +575,7 @@
             </div>
         </div>
 
+        </main>
     </div>
 
     <!-- Footer -->
@@ -862,6 +950,25 @@
         window.addEventListener('DOMContentLoaded', function() {
             console.log('%c=== PAGE FULLY LOADED ===', 'color: green; font-weight: bold;');
             console.log('Checking role access...');
+
+            const sideLinks = document.querySelectorAll('.side-nav a[data-section]');
+            const sections = document.querySelectorAll('.admin-section');
+
+            function showSection(sectionId) {
+                sections.forEach(section => {
+                    section.classList.toggle('active', section.id === sectionId);
+                });
+                sideLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.section === sectionId);
+                });
+            }
+
+            sideLinks.forEach(link => {
+                link.addEventListener('click', event => {
+                    event.preventDefault();
+                    showSection(link.dataset.section);
+                });
+            });
             
             // Call checkRoleAccess (from auth.js)
             const accessGranted = checkRoleAccess('ADMIN');

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Politician Dashboard | FSAD-PS08</title>
+    <link rel="icon" type="image/png" href="../fa.png?v=2">
+    <link rel="shortcut icon" type="image/png" href="../fa.png?v=2">
     <link rel="stylesheet" href="../css/style.css">
     
     <style>
@@ -16,6 +18,64 @@
             background-color: red !important;
             color: white !important;
             border-color: red !important;
+        }
+
+        body {
+            padding-bottom: 48px;
+        }
+
+        .stats-container {
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card {
+            padding: 10px 8px;
+        }
+
+        .stat-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+
+        .stat-card p {
+            font-size: 0.7rem;
+        }
+
+        .chart-container {
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .chart-wrapper {
+            margin-bottom: 10px;
+        }
+
+        .details-card {
+            margin-top: 10px;
+        }
+
+        .dashboard-footer {
+            text-align: center;
+            padding: 14px 16px;
+            background: #fff;
+            color: #7f8c8d;
+            border-top: 1px solid #e0e0e0;
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 900;
+        }
+
+        .dashboard-footer p {
+            margin: 0;
+            font-size: 12px;
         }
     </style>
 
@@ -63,7 +123,7 @@
         </div>
 
         <!-- Detailed Issues Table -->
-        <div class="card">
+        <div class="card details-card">
             <h2>📋 Detailed Issues Breakdown</h2>
             <div class="table-container">
                 <table id="issuesTable">
@@ -84,6 +144,11 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+        <p>Politician Panel – Citizen Politician Interaction System</p>
+    </footer>
 
     <!-- JavaScript Files -->
     <script src="../js/config.js"></script>
