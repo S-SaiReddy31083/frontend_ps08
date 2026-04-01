@@ -5,26 +5,13 @@
 
 // Check role-based access on page load
 (function checkAccess() {
-    const userStr = localStorage.getItem('user');
-    
-    if (!userStr) {
-        alert('Access denied. Please login first.');
-        window.location.href = 'login.html';
+    if (!checkSession('CITIZEN')) {
         return;
     }
-    
-    try {
-        const user = JSON.parse(userStr);
-        if (user.role !== 'CITIZEN') {
-            alert('Access denied. This page is for Citizens only.');
-            window.location.href = 'login.html';
-            return;
-        }
-    } catch (e) {
-        alert('Invalid session. Please login again.');
-        localStorage.removeItem('user');
-        window.location.href = 'login.html';
-    }
+
+    setInterval(() => {
+        checkSession('CITIZEN');
+    }, SESSION_CHECK_INTERVAL_MS);
 })();
 
 // DOM Elements

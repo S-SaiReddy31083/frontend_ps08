@@ -124,7 +124,8 @@ async function handleLogin(event) {
             id: data.id,
             name: data.name,
             email: data.email,
-            role: data.role
+            role: data.role,
+            loginTime: Date.now()
         }));
         
         // Show success message
@@ -172,12 +173,75 @@ function getCurrentUser() {
     return null;
 }
 
+const SESSION_TIMEOUT_MS = 2 * 60 * 1000;
+const SESSION_CHECK_INTERVAL_MS = 5000;
+
+function redirectToLogin() {
+    const inPagesFolder = window.location.pathname.includes('/pages/');
+    window.location.href = inPagesFolder ? 'login.html' : 'pages/login.html';
+}
+
 /**
  * Logout user
  */
 function logout() {
     localStorage.removeItem('user');
-    window.location.href = '../pages/login.html';
+    redirectToLogin();
+}
+
+function isSessionExpired(user) {
+    if (!user || user.loginTime === undefined || user.loginTime === null) {
+        return true;
+    }
+
+    const loginTime = Number(user.loginTime);
+    if (!Number.isFinite(loginTime)) {
+        return true;
+    }
+
+    return Date.now() - loginTime > SESSION_TIMEOUT_MS;
+}
+
+function redirectToRoleDashboard(role) {
+    if (role === 'CITIZEN') {
+        window.location.href = 'citizen.html';
+        return;
+    }
+    if (role === 'POLITICIAN') {
+        window.location.href = 'politician.html';
+        return;
+    }
+    if (role === 'ADMIN') {
+        window.location.href = 'admin.html';
+        return;
+    }
+    if (role === 'MODERATOR') {
+        window.location.href = 'moderator.html';
+        return;
+    }
+}
+
+function checkSession(requiredRole) {
+    const user = getCurrentUser();
+
+    if (!user) {
+        redirectToLogin();
+        return false;
+    }
+
+    if (isSessionExpired(user)) {
+        alert('Session expired. Please login again.');
+        logout();
+        return false;
+    }
+
+    if (requiredRole && user.role !== requiredRole) {
+        alert(`Access denied. This page is for ${requiredRole} only.`);
+        redirectToRoleDashboard(user.role);
+        return false;
+    }
+
+    return true;
 }
 
 /**
@@ -185,31 +249,5 @@ function logout() {
  * @param {string} requiredRole - Required role (CITIZEN or POLITICIAN)
  */
 function checkRoleAccess(requiredRole) {
-    const user = getCurrentUser();
-    
-    if (!user) {
-        window.location.href = 'login.html';
-        return false;
-    }
-    
-    if (user.role !== requiredRole) {
-        alert(`Access denied. This page is for ${requiredRole} only.`);
-        
-        if (user.role === 'CITIZEN') {
-            window.location.href = 'citizen.html';
-        } 
-        else if (user.role === 'POLITICIAN') {
-            window.location.href = 'politician.html';
-        } 
-        else if (user.role === 'ADMIN') {
-            window.location.href = 'admin.html';
-        } 
-        else if (user.role === 'MODERATOR') {
-            window.location.href = 'moderator.html';
-        }
-        
-        return false;
-    }
-    
-    return true;
+    return checkSession(requiredRole);
 }
