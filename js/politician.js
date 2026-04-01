@@ -373,12 +373,12 @@ function displayIssuesTable(issues) {
     const sortedIssues = [...issues].sort((a, b) => (b.voteCount || b.votes || 0) - (a.voteCount || a.votes || 0));
     
     // Populate table with issues
-    sortedIssues.forEach(issue => {
+    sortedIssues.forEach((issue, index) => {
         const row = document.createElement('tr');
         const voteCount = issue.voteCount !== undefined ? issue.voteCount : (issue.votes || 0);
         
         row.innerHTML = `
-    <td>${issue.id}</td>
+    <td>${index + 1}</td>
     <td><strong>${escapeHtml(issue.title)}</strong></td>
     <td><span class="badge badge-${issue.category.toLowerCase()}">${issue.category}</span></td>
     <td><strong><span class="vote-count" id="vote-${issue.id}">👍 ${voteCount}</span></strong></td>

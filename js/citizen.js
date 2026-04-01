@@ -167,11 +167,11 @@ function displayIssues(issues) {
     }
     
     // Populate table with issues
-    issues.forEach(issue => {
+    issues.forEach((issue, index) => {
         const row = document.createElement('tr');
         
         row.innerHTML = `
-            <td>${issue.id}</td>
+            <td>${index + 1}</td>
             <td><strong>${escapeHtml(issue.title)}</strong></td>
             <td>${escapeHtml(issue.description)}</td>
             <td><span class="badge badge-${issue.category.toLowerCase()}">${issue.category}</span></td>
