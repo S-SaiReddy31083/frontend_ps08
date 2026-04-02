@@ -174,7 +174,6 @@ function getCurrentUser() {
 }
 
 const SESSION_TIMEOUT_MS = 2 * 60 * 1000;
-const SESSION_CHECK_INTERVAL_MS = 5000;
 
 function redirectToLogin() {
     const inPagesFolder = window.location.pathname.includes('/pages/');
@@ -230,7 +229,6 @@ function checkSession(requiredRole) {
     }
 
     if (isSessionExpired(user)) {
-        alert('Session expired. Please login again.');
         logout();
         return false;
     }

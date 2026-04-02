@@ -9,10 +9,6 @@
     if (!checkSession('POLITICIAN')) {
         return;
     }
-
-    setInterval(() => {
-        checkSession('POLITICIAN');
-    }, SESSION_CHECK_INTERVAL_MS);
 })();
 
 // DOM Elements

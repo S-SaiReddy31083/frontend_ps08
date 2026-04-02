@@ -8,10 +8,6 @@
     if (!checkSession('CITIZEN')) {
         return;
     }
-
-    setInterval(() => {
-        checkSession('CITIZEN');
-    }, SESSION_CHECK_INTERVAL_MS);
 })();
 
 // DOM Elements
