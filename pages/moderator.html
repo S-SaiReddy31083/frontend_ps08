@@ -582,7 +582,6 @@
         // Global variables and initialization
         // ========================================
         let allIssues = [];
-        let sessionIntervalId = null;
 
         console.log('%c=== MODERATOR DASHBOARD INITIALIZED ===', 'color: #f5576c; font-weight: bold; font-size: 14px;');
         console.log('BASE_URL:', BASE_URL);
@@ -619,15 +618,6 @@
             return el;
         }
 
-        function startSessionMonitor() {
-            if (sessionIntervalId) {
-                return;
-            }
-
-            sessionIntervalId = setInterval(() => {
-                checkSession('MODERATOR');
-            }, SESSION_CHECK_INTERVAL_MS);
-        }
 
         /**
          * Load moderator statistics from API
@@ -894,7 +884,6 @@
             if (accessGranted) {
                 console.log('Loading moderator dashboard...');
                 loadModeratorStats();
-                startSessionMonitor();
             }
         }, false);
 
@@ -906,7 +895,6 @@
             setTimeout(() => {
                 if (checkSession('MODERATOR')) {
                     loadModeratorStats();
-                    startSessionMonitor();
                 }
             }, 100);
         }

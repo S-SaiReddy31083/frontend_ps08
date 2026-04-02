@@ -24,6 +24,70 @@
             padding-bottom: 48px;
         }
 
+        .politician-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 24px;
+        }
+
+        .side-nav {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 16px 0;
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px - 48px);
+            overflow-y: auto;
+        }
+
+        .side-nav h4 {
+            margin: 0 20px 12px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #7f8c8d;
+        }
+
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .side-nav a:hover,
+        .side-nav a:focus {
+            background: #f8f9fa;
+            border-left-color: #667eea;
+        }
+
+        .side-nav a.active {
+            background: #eef2ff;
+            border-left-color: #4f46e5;
+            color: #1f2937;
+        }
+
+        .politician-main {
+            min-width: 0;
+        }
+
+        .politician-section {
+            display: none;
+        }
+
+        .politician-section.active {
+            display: block;
+        }
+
         .stats-container {
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 6px;
@@ -92,57 +156,70 @@
         </div>
     </div>
 
-    <div class="container">
-        <!-- Alert Messages -->
-        <div id="alertMessage" class="alert"></div>
+    <div class="politician-layout">
+        <aside class="side-nav">
+            <h4>Politician Menu</h4>
+            <a href="#stats" data-section="stats">📊 Overview</a>
+            <a href="#charts" data-section="charts">📈 Charts</a>
+            <a href="#details" data-section="details">📋 Details</a>
+        </aside>
 
-        <!-- Loading Spinner -->
-        <div id="loading" class="loading">
-            <div class="spinner"></div>
-            <p>Loading analytics data...</p>
-        </div>
+        <main class="politician-main">
+            <div class="container">
+                <!-- Alert Messages -->
+                <div id="alertMessage" class="alert"></div>
 
-        <!-- Statistics Cards -->
-        <div class="stats-container" id="statsContainer">
-            <!-- Stats will be populated dynamically -->
-        </div>
+                <!-- Loading Spinner -->
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading analytics data...</p>
+                </div>
 
-        <!-- Charts Section -->
-        <div class="chart-container">
-            <!-- Pie Chart -->
-            <div class="chart-wrapper">
-                <h3>📈 Category Distribution (Percentage)</h3>
-                <canvas id="pieChart"></canvas>
+                <!-- Statistics Cards -->
+                <section id="stats" class="politician-section">
+                    <div class="stats-container" id="statsContainer">
+                        <!-- Stats will be populated dynamically -->
+                    </div>
+                </section>
+
+                <!-- Charts Section -->
+                <section id="charts" class="chart-container politician-section">
+                    <!-- Pie Chart -->
+                    <div class="chart-wrapper">
+                        <h3>📈 Category Distribution (Percentage)</h3>
+                        <canvas id="pieChart"></canvas>
+                    </div>
+
+                    <!-- Bar Chart -->
+                    <div class="chart-wrapper">
+                        <h3>📊 Issues per Category (Count)</h3>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Detailed Issues Table -->
+                <section id="details" class="card details-card politician-section">
+                    <h2>📋 Detailed Issues Breakdown</h2>
+                    <div class="table-container">
+                        <table id="issuesTable">
+                            <thead>
+                                <tr>
+                                   <th>ID</th>
+                                   <th>Title</th>
+                                   <th>Category</th>
+                                   <th>Votes</th>
+                                   <th>Description</th>
+                                   <th>Media</th>
+                                </tr>
+                            </thead>
+                            <tbody id="issuesTableBody">
+                                <!-- Issues will be populated here dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
             </div>
-
-            <!-- Bar Chart -->
-            <div class="chart-wrapper">
-                <h3>📊 Issues per Category (Count)</h3>
-                <canvas id="barChart"></canvas>
-            </div>
-        </div>
-
-        <!-- Detailed Issues Table -->
-        <div class="card details-card">
-            <h2>📋 Detailed Issues Breakdown</h2>
-            <div class="table-container">
-                <table id="issuesTable">
-                    <thead>
-                        <tr>
-                           <th>ID</th>
-                           <th>Title</th>
-                           <th>Category</th>
-                           <th>Votes</th>
-                           <th>Description</th>
-                           <th>Media</th>
-                        </tr>
-                    </thead>
-                    <tbody id="issuesTableBody">
-                        <!-- Issues will be populated here dynamically -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </main>
     </div>
 
     <!-- Footer -->
@@ -156,6 +233,27 @@
     <script>
         // Check if user is logged in and has POLITICIAN role
         checkRoleAccess('POLITICIAN');
+
+        const sideLinks = document.querySelectorAll('.side-nav a[data-section]');
+        const sections = document.querySelectorAll('.politician-section');
+
+        function showSection(sectionId) {
+            sections.forEach(section => {
+                section.classList.toggle('active', section.id === sectionId);
+            });
+            sideLinks.forEach(link => {
+                link.classList.toggle('active', link.dataset.section === sectionId);
+            });
+        }
+
+        sideLinks.forEach(link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                showSection(link.dataset.section);
+            });
+        });
+
+        showSection('stats');
     </script>
     <script src="../js/politician.js"></script>
 </body>

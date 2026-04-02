@@ -592,7 +592,6 @@
         // ========================================
         let allUsers = [];
         let allIssues = [];
-        let sessionIntervalId = null;
 
         console.log('%c=== ADMIN DASHBOARD INITIALIZED ===', 'color: green; font-weight: bold; font-size: 14px;');
         console.log('BASE_URL:', BASE_URL);
@@ -629,15 +628,6 @@
             return el;
         }
 
-        function startSessionMonitor() {
-            if (sessionIntervalId) {
-                return;
-            }
-
-            sessionIntervalId = setInterval(() => {
-                checkSession('ADMIN');
-            }, SESSION_CHECK_INTERVAL_MS);
-        }
 
         /**
          * Load system statistics from API
@@ -987,7 +977,6 @@
             if (accessGranted) {
                 console.log('Loading dashboard...');
                 loadSystemStats();
-                startSessionMonitor();
             }
         }, false);
 
@@ -999,7 +988,6 @@
             setTimeout(() => {
                 if (checkSession('ADMIN')) {
                     loadSystemStats();
-                    startSessionMonitor();
                 }
             }, 100);
         }
