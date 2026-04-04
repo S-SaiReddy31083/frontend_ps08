@@ -102,9 +102,9 @@ body {
 }
 
 .navbar-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px 0 10px;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 40px 0 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -329,7 +329,8 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 56px;
-    padding: 70px 24px 40px;
+    padding: 70px 0 40px;
+    margin-left: -8px;
 }
 
 .hero-content {
