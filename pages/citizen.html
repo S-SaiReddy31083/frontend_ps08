@@ -123,6 +123,20 @@
                     <label>Upload Video:</label>
                     <input type="file" id="video">
                 </div>
+                <div class="form-group">
+               <div class="form-group">
+    <label for="location">Location</label>
+    <div style="display:flex; gap:10px;">
+        <input 
+            type="text" 
+            id="location" 
+            placeholder="Enter location"
+            required
+        >
+        <button type="button" onclick="getLocation()">📍 Use My Location</button>
+    </div>
+</div>
+</div>
                 <button type="submit" class="btn btn-primary">Submit Issue</button>
             </form>
             </div>
