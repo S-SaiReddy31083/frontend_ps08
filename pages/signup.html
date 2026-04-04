@@ -7,6 +7,15 @@
     <link rel="icon" type="image/png" href="../sign.png?v=1">
     <link rel="shortcut icon" type="image/png" href="../sign.png?v=1">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .politician-only {
+            display: none;
+        }
+
+        .politician-only.is-active {
+            display: block;
+        }
+    </style>
 </head>
 <body class="signup-page">
     <div class="container auth-container">
@@ -95,6 +104,32 @@
                         <input type="text" id="address" name="address" placeholder="123 Main St, City">
                     </div>
 
+                    <div class="form-group politician-only" data-role="POLITICIAN">
+                        <label for="govId" class="label-with-icon">
+                            <span class="label-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                                    <path d="M7 9h6M7 13h10"></path>
+                                </svg>
+                            </span>
+                            Government ID Proof
+                        </label>
+                        <input type="file" id="govId" name="govId" data-required="true" accept="image/*,application/pdf">
+                    </div>
+
+                    <div class="form-group politician-only" data-role="POLITICIAN">
+                        <label for="constitution" class="label-with-icon">
+                            <span class="label-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M6 4h9l3 3v13H6z"></path>
+                                    <path d="M9 9h6M9 13h6M9 17h4"></path>
+                                </svg>
+                            </span>
+                            Constitution
+                        </label>
+                        <input type="text" id="constitution" name="constitution" placeholder="Enter your constitution" data-required="true">
+                    </div>
+
                     <div class="form-group">
                         <label for="password" class="label-with-icon">
                             <span class="label-icon" aria-hidden="true">
@@ -152,6 +187,22 @@
         const roleButtons = document.querySelectorAll('.role-option');
         const roleInput = document.getElementById('role');
         const signupForm = document.getElementById('signupForm');
+        const politicianFields = document.querySelectorAll('.politician-only');
+
+        function updateRoleFields() {
+            const isPolitician = roleInput.value === 'POLITICIAN';
+
+            politicianFields.forEach((field) => {
+                field.classList.toggle('is-active', isPolitician);
+                const inputs = field.querySelectorAll('input, select, textarea');
+
+                inputs.forEach((input) => {
+                    const shouldRequire = input.dataset.required === 'true';
+                    input.required = isPolitician && shouldRequire;
+                    input.disabled = !isPolitician;
+                });
+            });
+        }
 
         roleButtons.forEach((button) => {
             button.addEventListener('click', () => {
@@ -163,8 +214,11 @@
                 button.classList.add('is-active');
                 button.setAttribute('aria-pressed', 'true');
                 roleInput.value = button.dataset.role;
+                updateRoleFields();
             });
         });
+
+        updateRoleFields();
 
         signupForm.addEventListener('submit', (event) => {
             event.preventDefault();
