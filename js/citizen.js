@@ -65,6 +65,7 @@ async function handleIssueSubmit(event) {
     formData.append("title", document.getElementById("title").value.trim());
     formData.append("description", document.getElementById("description").value.trim());
     formData.append("category", document.getElementById("category").value);
+    formData.append("location", document.getElementById("location").value.trim());
 
     const imageFile = document.getElementById("image")?.files[0];
     const videoFile = document.getElementById("video")?.files[0];
@@ -129,6 +130,33 @@ async function fetchIssues() {
     }
 }
 
+function getLocation() {
+    if (!navigator.geolocation) {
+        showAlert("❌ Geolocation is not supported by your browser", "error");
+        return;
+    }
+
+    showAlert("📍 Fetching your location...", "success");
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // For now we store lat,long (simple and works)
+            const locationText = `${latitude}, ${longitude}`;
+
+            document.getElementById("location").value = locationText;
+
+            showAlert("✅ Location detected successfully!", "success");
+        },
+        (error) => {
+            console.error(error);
+            showAlert("❌ Unable to retrieve location. अनुमति दें (Allow location access)", "error");
+        }
+    );
+}
+
 /**
  * Display issues in the table
  * @param {Array} issues - Array of issue objects
@@ -157,6 +185,7 @@ function displayIssues(issues) {
             <td>${index + 1}</td>
             <td><strong>${escapeHtml(issue.title)}</strong></td>
             <td>${escapeHtml(issue.description)}</td>
+            <td>${issue.location || 'N/A'}</td>
             <td><span class="badge badge-${issue.category.toLowerCase()}">${issue.category}</span></td>
             <td><strong><span class="vote-count" id="vote-${issue.id}">👍 ${issue.voteCount || issue.votes || 0}</span></strong></td>
             <td>
