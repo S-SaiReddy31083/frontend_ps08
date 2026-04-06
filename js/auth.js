@@ -249,4 +249,3 @@ function checkSession(requiredRole) {
 function checkRoleAccess(requiredRole) {
     return checkSession(requiredRole);
 }
-
