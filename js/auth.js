@@ -61,7 +61,8 @@ async function handleSignup(event) {
             body: JSON.stringify(signupData)
         });
         
-        const data = await response.json();
+       const text = await response.text();
+const data = text ? JSON.parse(text) : {};
         
         if (!response.ok) {
             throw new Error(data.message || `HTTP error! Status: ${response.status}`);
