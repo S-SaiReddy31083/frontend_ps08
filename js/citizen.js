@@ -74,13 +74,13 @@ async function handleIssueSubmit(event) {
     }
 
     try {
-        const response = await fetch(API_ENDPOINTS.CREATE_ISSUE, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(issueData)
-        });
+       const response = await fetch(API_ENDPOINTS.CREATE_ISSUE, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(issueData)
+});
 
         let data = {};
         try {
