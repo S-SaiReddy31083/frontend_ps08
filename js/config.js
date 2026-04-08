@@ -4,7 +4,7 @@
  */
 
 // Base URL for backend API (Spring Boot server)
-const BASE_URL = "http://localhost:9191";
+const BASE_URL = "https://backend-ps08.onrender.com";
 
 // API Endpoints
 const API_ENDPOINTS = {
