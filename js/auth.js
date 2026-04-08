@@ -29,32 +29,28 @@ function showAlert(message, type) {
  * Handle user signup
  * POST /api/auth/signup
  */
-async function handleSignup(event) {
-    event.preventDefault();
-    
-    // Get form data
-   const signupData = {
-    name: document.getElementById('name').value.trim(),
-    email: document.getElementById('email').value.trim(),
-    password: document.getElementById('password').value,
-    role: document.getElementById('role').value,
-    phone: document.getElementById('phone').value.trim(),       // ✅ ADD
-    address: document.getElementById('address').value.trim()    // ✅ ADD
-};
-    
-    // Validate form data
+async function handleSignup() {
+
+    const signupData = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value,
+        role: document.getElementById('role').value,
+        phone: document.getElementById('phone').value.trim(),
+        address: document.getElementById('address').value.trim()
+    };
+
     if (!signupData.name || !signupData.email || !signupData.password || !signupData.role) {
         showAlert('Please fill in all required fields', 'error');
         return;
     }
-    
+
     if (signupData.password.length < 6) {
         showAlert('Password must be at least 6 characters long', 'error');
         return;
     }
-    
+
     try {
-        // Send POST request to backend
         const response = await fetch(AUTH_ENDPOINTS.SIGNUP, {
             method: 'POST',
             headers: {
@@ -62,32 +58,27 @@ async function handleSignup(event) {
             },
             body: JSON.stringify(signupData)
         });
-        
-      let data = {};
-try {
-    data = await response.json();
-} catch (e) {
-    data = {};
-}
-        
+
+        let data = {};
+        try {
+            data = await response.json();
+        } catch (e) {}
+
         if (!response.ok) {
             throw new Error(data.message || `HTTP error! Status: ${response.status}`);
         }
-        
-        // Show success message
+
         showAlert('✅ Account created successfully! Redirecting to login...', 'success');
-        
-        // Reset form
+
         document.getElementById('signupForm').reset();
-        
-        // Redirect to login page after 2 seconds
+
         setTimeout(() => {
             window.location.href = 'login.html';
         }, 2000);
-        
+
     } catch (error) {
         console.error('Signup error:', error);
-        showAlert(error.message || 'Failed to create account. Please try again.', 'error');
+        showAlert(error.message || 'Failed to create account', 'error');
     }
 }
 
