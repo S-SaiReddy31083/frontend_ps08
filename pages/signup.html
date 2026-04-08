@@ -221,24 +221,24 @@
         updateRoleFields();
 
         signupForm.addEventListener('submit', (event) => {
-            event.preventDefault();
+    event.preventDefault();
 
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const termsAccepted = document.getElementById('terms').checked;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const termsAccepted = document.getElementById('terms').checked;
 
-            if (!termsAccepted) {
-                showAlert('Please accept the terms and privacy policy', 'error');
-                return;
-            }
+    if (!termsAccepted) {
+        showAlert('Please accept the terms and privacy policy', 'error');
+        return;
+    }
 
-            if (password !== confirmPassword) {
-                showAlert('Passwords do not match', 'error');
-                return;
-            }
+    if (password !== confirmPassword) {
+        showAlert('Passwords do not match', 'error');
+        return;
+    }
 
-            handleSignup(event);
-        });
+    handleSignup(); // ✅ REMOVE event
+});
     </script>
 </body>
 </html>
