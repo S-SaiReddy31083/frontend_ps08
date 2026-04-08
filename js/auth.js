@@ -33,12 +33,14 @@ async function handleSignup(event) {
     event.preventDefault();
     
     // Get form data
-    const signupData = {
-        name: document.getElementById('name').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        password: document.getElementById('password').value,
-        role: document.getElementById('role').value
-    };
+   const signupData = {
+    name: document.getElementById('name').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    password: document.getElementById('password').value,
+    role: document.getElementById('role').value,
+    phone: document.getElementById('phone').value.trim(),       // ✅ ADD
+    address: document.getElementById('address').value.trim()    // ✅ ADD
+};
     
     // Validate form data
     if (!signupData.name || !signupData.email || !signupData.password || !signupData.role) {
