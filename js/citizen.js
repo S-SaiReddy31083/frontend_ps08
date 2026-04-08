@@ -60,38 +60,42 @@ function hideLoading() {
 async function handleIssueSubmit(event) {
     event.preventDefault();
 
-    const formData = new FormData();
+    const issueData = {
+        title: document.getElementById("title").value.trim(),
+        description: document.getElementById("description").value.trim(),
+        category: document.getElementById("category").value,
+        location: document.getElementById("location").value.trim()
+    };
 
-    formData.append("title", document.getElementById("title").value.trim());
-    formData.append("description", document.getElementById("description").value.trim());
-    formData.append("category", document.getElementById("category").value);
-    formData.append("location", document.getElementById("location").value.trim());
-
-    const imageFile = document.getElementById("image")?.files[0];
-    const videoFile = document.getElementById("video")?.files[0];
-
-    if (imageFile) {
-        formData.append("image", imageFile);
-    }
-    if (videoFile) {
-        formData.append("video", videoFile);
+    // Basic validation
+    if (!issueData.title || !issueData.description || !issueData.category || !issueData.location) {
+        showAlert("❌ Please fill all required fields", "error");
+        return;
     }
 
     try {
         const response = await fetch(API_ENDPOINTS.CREATE_ISSUE, {
             method: "POST",
-            body: formData
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(issueData)
         });
 
+        let data = {};
+        try {
+            data = await response.json();
+        } catch (e) {}
+
         if (!response.ok) {
-            const errorText = await response.text();
-            const message = errorText || `HTTP ${response.status} ${response.statusText}`;
-            throw new Error(message);
+            throw new Error(data.message || `HTTP ${response.status}`);
         }
 
         showAlert("✅ Issue submitted successfully!", "success");
+
         issueForm.reset();
         fetchIssues();
+
     } catch (error) {
         console.error(error);
         showAlert(`❌ Error submitting issue: ${error.message}`, "error");
