@@ -61,8 +61,12 @@ async function handleSignup(event) {
             body: JSON.stringify(signupData)
         });
         
-       const text = await response.text();
-const data = text ? JSON.parse(text) : {};
+      let data = {};
+try {
+    data = await response.json();
+} catch (e) {
+    data = {};
+}
         
         if (!response.ok) {
             throw new Error(data.message || `HTTP error! Status: ${response.status}`);
@@ -114,7 +118,12 @@ async function handleLogin(event) {
             body: JSON.stringify(loginData)
         });
         
-        const data = await response.json();
+       let data = {};
+try {
+    data = await response.json();
+} catch (e) {
+    data = {};
+}
         
         if (!response.ok) {
             throw new Error(data.message || 'Invalid credentials');
