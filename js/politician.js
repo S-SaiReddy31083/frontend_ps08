@@ -366,22 +366,28 @@ function displayIssuesTable(issues) {
     <td><span class="badge badge-${issue.category.toLowerCase()}">${issue.category}</span></td>
     <td><strong><span class="vote-count" id="vote-${issue.id}">👍 ${voteCount}</span></strong></td>
     <td>${escapeHtml(issue.description)}</td>
-    <td>${issue.location || 'N/A'}</td>
 
-    <td>
-        ${issue.imageUrl ? `
-            <img src="http://localhost:9191${issue.imageUrl}"
-                 width="120"
-                 style="display:block;margin-bottom:6px;border-radius:6px;border:1px solid #ccc;" />
-        ` : ''}
+<td>
+    ${
+        issue.imageUrl
+        ? `<img src="https://backend-ps08.onrender.com${issue.imageUrl}"
+                width="120"
+                style="display:block;margin-bottom:6px;border-radius:6px;border:1px solid #ccc;" />`
+        : ''
+    }
 
-        ${issue.videoUrl ? `
-            <video width="180" controls style="border-radius:6px;border:1px solid #ccc;">
-                <source src="http://localhost:9191${issue.videoUrl}" type="video/mp4">
-                Your browser does not support video.
-            </video>
-        ` : ''}
-    </td>
+    ${
+        issue.videoUrl
+        ? `<video width="180" controls style="border-radius:6px;border:1px solid #ccc;">
+                <source src="https://backend-ps08.onrender.com${issue.videoUrl}" type="video/mp4">
+           </video>`
+        : ''
+    }
+
+    ${!issue.imageUrl && !issue.videoUrl ? "No Media" : ""}
+</td>
+
+<td>${issue.location || 'N/A'}</td>
 `;
         
         issuesTableBody.appendChild(row);
